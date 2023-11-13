@@ -139,10 +139,13 @@ class Ticket(models.Model):
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
     executor = models.ForeignKey(Executor, on_delete=models.CASCADE, blank=True, null=True)
-    severities = models.CharField(choices=SEVERITIES, default='1', max_length=1)
+    severity = models.CharField(choices=SEVERITIES, default='1', max_length=1)
     desc = models.CharField(max_length=1000)
     ticket_date = models.DateTimeField()
     is_resolved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.get_severity_display()} {self.ticket_date}, Is resolved {self.is_resolved}'
 
 
 class Review(models.Model):
@@ -156,6 +159,9 @@ class Review(models.Model):
 
     rating = models.CharField(choices=RETING_FIELD, default='1', max_length=1)
     desc = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return f'{self.get_rating_display()}'
 
 
 class Authoring(models.Model):
