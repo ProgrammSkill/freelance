@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'corsheaders',
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -74,6 +75,23 @@ CORS_ALLOW_METHODS = (
     "PUT",
 )
 
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.MultiPartParser',
+    ],
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Freelance service API',
+    'DESCRIPTION': 'API for for a freelance exchange',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
+
 ROOT_URLCONF = 'freelance.urls'
 
 TEMPLATES = [
@@ -97,7 +115,6 @@ WSGI_APPLICATION = 'freelance.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-print(os.getenv('POSTGRES_DB'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

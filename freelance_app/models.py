@@ -5,19 +5,19 @@ from django.utils import timezone
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(blank=True, null=True)
+    email = models.EmailField()
     username = models.EmailField(max_length=150, unique=True)
     password = models.CharField(max_length=150)
-    phone = models.CharField(max_length=11)
-    name = models.CharField(max_length=150, blank=True, null=True)
-    surname = models.CharField(max_length=150, blank=True, null=True)
+    phone = models.CharField(max_length=20)
+    name = models.CharField(max_length=150)
+    surname = models.CharField(max_length=150)
     lastname = models.CharField(max_length=150, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-    photo = models.ImageField(upload_to="photos/")
+    photo = models.ImageField(upload_to="photos/", null=True)
     date_joined = models.DateTimeField(default=timezone.now)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=0)
-    is_active = models.BooleanField(default=1)
+    is_staff = models.BooleanField(default=False, null=True)
+    is_superuser = models.BooleanField(default=0, null=True)
+    is_active = models.BooleanField(default=1, null=True)
     groups = models.ManyToManyField(
         Group,
         verbose_name='groups',
