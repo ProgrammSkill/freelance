@@ -23,7 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name='groups',
         blank=True,
         help_text=
-            'The groups this user belongs to. A user will get all permissions '
+            'The groups this user belongs to. A user will get all permissions'
             'granted to each of their groups.'
         ,
         related_name='user_groups',
