@@ -24,6 +24,26 @@ class ExecutorListView(generics.ListAPIView):
     serializer_class = ExecutorSerializer
 
 
+class CustomerRetrieveView(generics.RetrieveAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+
+class CustomerUpdateView(generics.UpdateAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CreateCustomerSerializer
+
+
+class CustomerCreateView(generics.CreateAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CreateCustomerSerializer
+
+
+class CustomerListView(generics.ListAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+
 class TicketListView(generics.ListAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
