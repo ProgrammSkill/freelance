@@ -171,12 +171,12 @@ class ReviewRetrieveView(generics.RetrieveAPIView):
 
 class ReviewUpdateView(generics.UpdateAPIView):
     queryset = Ticket.objects.all()
-    serializer_class = CreateReviewSerializer
+    serializer_class = ReviewSerializer
 
 
 class ReviewCreateView(generics.CreateAPIView):
     queryset = Review.objects.all()
-    serializer_class = CreateReviewSerializer
+    serializer_class = ReviewSerializer
 
 
 class ReviewListView(generics.ListAPIView):
