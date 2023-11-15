@@ -60,8 +60,27 @@ class ServiceCreateView(generics.CreateAPIView):
 
 
 class ServiceListView(generics.ListAPIView):
-    queryset = Service.objects.all()
+    # queryset = Service.objects.all()
     serializer_class = ServiceSerializer
+
+    def get_queryset(self):
+        queryset = Service.objects.all()
+        params = self.request.query_params
+
+        service_type = params.get('service', None)
+        price = params.get('price', None)
+        executor = params.get('executor', None)
+
+        if service_type:
+            queryset = queryset.filter(service_type=service_type)
+
+        if price:
+            queryset = queryset.filter(price__lte=price)
+
+        if executor:
+            queryset = queryset.filter(executor__id=executor)
+
+        return queryset
 
 
 class OrderRetrieveView(generics.RetrieveAPIView):
