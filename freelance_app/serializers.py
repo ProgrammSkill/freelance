@@ -96,9 +96,9 @@ class OrderingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class OrderingTagSerializer(serializers.ModelSerializer):
+class CreateOrderingSerializer(serializers.ModelSerializer):
     class Meta:
-        models = Ordering
+        model = Ordering
         fields = '__all__'
 
 
