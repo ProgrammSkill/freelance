@@ -42,7 +42,7 @@ class CreateCustomerSerializer(serializers.ModelSerializer):
 
 class ServiceSerializer(serializers.ModelSerializer):
     executor = ExecutorSerializer()
-    service_type = serializers.CharField(source='get_service_type_display', read_only=True)
+    service_type = serializers.CharField(source='get_service_type_display')
 
     class Meta:
         model = Service
