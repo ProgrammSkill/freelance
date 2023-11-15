@@ -9,6 +9,21 @@ class ExecutorRetrieveView(generics.RetrieveAPIView):
     serializer_class = ExecutorSerializer
 
 
+class ExecutorUpdateView(generics.UpdateAPIView):
+    queryset = Executor.objects.all()
+    serializer_class = CreateExecutorSerializer
+
+
+class ExecutorCreateView(generics.CreateAPIView):
+    queryset = Executor.objects.all()
+    serializer_class = CreateExecutorSerializer
+
+
+class ExecutorListView(generics.ListAPIView):
+    queryset = Executor.objects.all()
+    serializer_class = ExecutorSerializer
+
+
 class TicketListView(generics.ListAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
