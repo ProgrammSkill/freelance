@@ -5,12 +5,12 @@ from django.utils import timezone
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField()
+    email = models.EmailField(blank=True, null=True)
     username = models.EmailField(max_length=150, unique=True)
     password = models.CharField(max_length=150)
     phone = models.CharField(max_length=20)
-    name = models.CharField(max_length=150)
-    surname = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, blank=True, null=True)
+    surname = models.CharField(max_length=150, blank=True, null=True)
     lastname = models.CharField(max_length=150, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
     photo = models.ImageField(upload_to="photos/", null=True)

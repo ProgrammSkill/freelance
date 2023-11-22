@@ -42,9 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'freelance_app',
     'rest_framework',
+    # 'rest_framework.authtoken',
     'djoser',
     'corsheaders',
-    "drf_spectacular",
+    'drf_spectacular',
+    'oauth2_provider',
+    'social_django',
+    'rest_framework_social_oauth2',
 ]
 
 MIDDLEWARE = [
@@ -76,13 +80,30 @@ CORS_ALLOW_METHODS = (
 )
 
 REST_FRAMEWORK = {
-    'DEFAULT_PARSER_CLASSES': [
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.MultiPartParser',
-    ],
-    # YOUR SETTINGS
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        # 'rest_framework_social_oauth2.authentication.SocialAuthentication',
+    ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.vk.VKOAuth2',
+    'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = '51797170'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = '4jrP7SsItLzly196tdBJ'
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Freelance service API',
