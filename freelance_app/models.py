@@ -40,8 +40,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
 
     class Meta:
-        verbose_name = 'user'
-        verbose_name_plural = 'users'
+        verbose_name = 'Пользователи'
+        verbose_name_plural = 'Пользователи'
 
     @property
     def fullname(self):
@@ -54,12 +54,20 @@ class Executor(models.Model):
     def __str__(self):
         return f"User: {self.user}"
 
+    class Meta:
+        verbose_name = 'Исполнители'
+        verbose_name_plural = 'Исполнители'
+
 
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"User: {self.user}"
+
+    class Meta:
+        verbose_name = 'Заказчики'
+        verbose_name_plural = 'Заказчики'
 
 
 class Service(models.Model):
@@ -82,6 +90,10 @@ class Service(models.Model):
     def __str__(self):
         return f"{self.name}, {self.get_service_type_display()}, price: {self.price}"
 
+    class Meta:
+        verbose_name = 'Услуги'
+        verbose_name_plural = 'Услуги'
+
 
 class Order(models.Model):
     ORDER_TYPES = [
@@ -103,12 +115,15 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.name}, {self.get_order_type_display()}, price: {self.price}"
 
+    class Meta:
+        verbose_name = 'Заказы'
+        verbose_name_plural = 'Заказы'
+
 
 class Tag(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=30)
-
 
 class Ordering(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -121,6 +136,9 @@ class Ordering(models.Model):
     def __str__(self):
         return f"{self.order_date} - {self.deadline}, Customer: {self.customer}, Executor: {self.executor}"
 
+    class Meta:
+        verbose_name = 'Оформленные заказы'
+        verbose_name_plural = 'Оформленные заказы'
 
 class Message(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
