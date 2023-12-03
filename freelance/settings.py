@@ -110,7 +110,10 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'API for for a freelance exchange',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    # OTHER SETTINGS
+    'SWAGGER_UI_SETTINGS': {
+        'filter': True,  # включить поиск по тегам
+    },
+    'COMPONENT_SPLIT_REQUEST': True
 }
 
 ROOT_URLCONF = 'freelance.urls'

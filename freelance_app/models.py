@@ -1,43 +1,21 @@
 from django.db import models
-from django.contrib.auth.models import PermissionsMixin, Group, Permission
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
 
-class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(blank=True, null=True)
-    username = models.EmailField(max_length=150, unique=True)
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=20,  unique=True)
     password = models.CharField(max_length=150)
     phone = models.CharField(max_length=20)
-    name = models.CharField(max_length=150, blank=True, null=True)
+    name = models.CharField(max_length=150)
     surname = models.CharField(max_length=150, blank=True, null=True)
-    lastname = models.CharField(max_length=150, blank=True, null=True)
+    lastname = models.CharField(max_length=150)
     birthday = models.DateField(blank=True, null=True)
     photo = models.ImageField(upload_to="photos/", null=True)
     date_joined = models.DateTimeField(default=timezone.now)
-    is_staff = models.BooleanField(default=False, null=True)
     is_superuser = models.BooleanField(default=0, null=True)
     is_active = models.BooleanField(default=1, null=True)
-    groups = models.ManyToManyField(
-        Group,
-        verbose_name='groups',
-        blank=True,
-        help_text=
-            'The groups this user belongs to. A user will get all permissions'
-            'granted to each of their groups.'
-        ,
-        related_name='user_groups',
-        related_query_name='user',
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        verbose_name='user permissions',
-        blank=True,
-        help_text='Specific permissions for this user.',
-        related_name='user_permissions',
-        related_query_name='user',
-    )
-    USERNAME_FIELD = 'username'
 
     class Meta:
         verbose_name = 'Пользователи'
