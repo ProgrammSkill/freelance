@@ -18,6 +18,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False, null=True)
     is_superuser = models.BooleanField(default=0, null=True)
     is_active = models.BooleanField(default=1, null=True)
+    USERNAME_FIELD = 'username'
 
     class Meta:
         verbose_name = 'Пользователи'
