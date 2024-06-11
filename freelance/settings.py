@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import datetime
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c-a3ru=z)+p61k71ar2(mnagd)qgq!gi)ebi+0jb7!0m0g!e1%'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,12 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'freelance_app.apps.FreelanceAppConfig',
     'rest_framework',
-    # 'rest_framework.authtoken',
     'djoser',
     'corsheaders',
     'drf_spectacular',
-    'oauth2_provider',
-    'social_django',
     'rest_framework_social_oauth2',
 ]
 
@@ -87,23 +85,32 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.MultiPartParser',
     ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        # 'rest_framework_social_oauth2.authentication.SocialAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        "rest_framework.filters.SearchFilter",
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-# AUTHENTICATION_BACKENDS = [
-#     'social_core.backends.vk.VKOAuth2',
-#     'rest_framework_social_oauth2.backends.DjangoOAuth2',
-#     'django.contrib.auth.backends.ModelBackend',
-# ]
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=30),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'AUTH_HEADER_TYPES': ('Bearer', 'Token',),
+    'USER_ID_FIELD': 'username',
+    'USER_ID_CLAIM': 'username',
+    'AUTH_COOKIE_HTTP_ONLY': True,  # Установка флага HTTP Only для Access токена
+}
 
-# SOCIAL_AUTH_VK_OAUTH2_KEY = '51797170'
-# SOCIAL_AUTH_VK_OAUTH2_SECRET = '4jrP7SsItLzly196tdBJ'
+AUTH_USER_MODEL = 'freelance_app.User'
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Freelance service API',
