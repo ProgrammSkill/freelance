@@ -7,7 +7,6 @@ from django.db.transaction import atomic
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
-
 from freelance import settings
 from freelance_app.common_utils.token import get_token
 from freelance_app.models.user import User, UserPvc
@@ -141,10 +140,13 @@ class MyAvatarViewSet(generics.UpdateAPIView):
     def delete(self, request):
         user = request.user
         if user.avatar:
-            # Удаление изображения из сервера
-            avatar_path = os.path.join(settings.MEDIA_ROOT, str(user.avatar))
-            if os.path.exists(avatar_path):
-                os.remove(avatar_path)
+            # получение текущего аватара пользователя
+            current_avatar = self.request.user.avatar
+            if current_avatar:
+                try:
+                    os.remove(current_avatar.path)
+                except:
+                    pass
 
             # Удаление ссылки на аватар у пользователя
             user.avatar.delete(save=False)
@@ -152,7 +154,7 @@ class MyAvatarViewSet(generics.UpdateAPIView):
 
             return Response({"message": "Аватар успешно удален"}, status=status.HTTP_204_NO_CONTENT)
         else:
-            return Response({"message": "У пользователя нет аватара для удаления"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "У пользователя нет аватара для удаления"}, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_update(self, serializer):
         # получение текущего аватара пользователя
