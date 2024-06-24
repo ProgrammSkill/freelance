@@ -75,6 +75,8 @@ CORS_ALLOW_METHODS = (
     "PUT",
 )
 
+CLIENT_SIGNING_KEY = 'r9ow+8^)ne0o5d#e$cn(ck2xw04$&w=_$kq-rzg17#5#6ui2lk'
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -84,22 +86,22 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        # 'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 AUTH_USER_MODEL = 'freelance_app.User'
 
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'Freelance service API',
-    'DESCRIPTION': 'API for for a freelance exchange',
+SPECTACULAR_ACCOUNT_SETTINGS = {
+    'TITLE': 'Freelance Account',
+    'DESCRIPTION': 'Freelance Account',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
-    # OTHER SETTINGS
+    'PREPROCESSING_HOOKS': ['freelance_app.swagger_content.hooks.preprocessing_filter_account'],
+    'SWAGGER_UI_SETTINGS': {
+        'filter': True,
+    },
+    'COMPONENT_SPLIT_REQUEST': True,
 }
 
 ROOT_URLCONF = 'freelance.urls'
@@ -180,3 +182,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = "/media/"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
