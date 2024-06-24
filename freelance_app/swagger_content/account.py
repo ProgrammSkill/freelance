@@ -62,6 +62,9 @@ account = extend_schema_view(
     ),
     put=extend_schema(
         tags=['Account']
+    ),
+    delete=extend_schema(
+        tags=['Account']
     )
 )
 

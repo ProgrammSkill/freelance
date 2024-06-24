@@ -4,8 +4,8 @@ from freelance_app.common_utils.file_paths import get_absolute_media_url_from_fi
 from freelance_app.common_utils.token import get_token_class
 
 
-# Класс позволяет преобразовать значение поля в представление.
 class CharToStorageField(serializers.CharField):
+    """ Класс позволяет преобразовать значение поля в представление """
 
     def to_representation(self, value):
         if not value:
