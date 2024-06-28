@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 SERVIES_SCHEMA_URLS = {
     'Freelance Account': '/api/freelance_app/schema-account/',
+    'Freelance Work': '/api/freelance_app/schema-work/'
 }
 
 

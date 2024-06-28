@@ -85,6 +85,10 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.MultiPartParser',
     ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        "rest_framework.filters.SearchFilter",
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -109,6 +113,17 @@ SPECTACULAR_ACCOUNT_SETTINGS = {
     'DESCRIPTION': 'Freelance Account',
     'VERSION': '1.0.0',
     'PREPROCESSING_HOOKS': ['freelance_app.swagger_content.hooks.preprocessing_filter_account'],
+    'SWAGGER_UI_SETTINGS': {
+        'filter': True,
+    },
+    'COMPONENT_SPLIT_REQUEST': True,
+}
+
+SPECTACULAR_WORK_SETTINGS = {
+    'TITLE': 'Freelance Work',
+    'DESCRIPTION': 'Freelance Work',
+    'VERSION': '1.0.0',
+    'PREPROCESSING_HOOKS': ['freelance_app.swagger_content.hooks.preprocessing_filter_work'],
     'SWAGGER_UI_SETTINGS': {
         'filter': True,
     },
