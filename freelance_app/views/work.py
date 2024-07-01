@@ -1,19 +1,12 @@
-
-from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.response import Response
-from rest_framework import generics, status
 from rest_framework.viewsets import ModelViewSet
-
-from ..models.work import Service
-from ..serializers.work import ServiceSerializer
-from rest_framework import generics, permissions
-from rest_framework.views import APIView
-from rest_framework.exceptions import PermissionDenied
-from ..swagger_content import service
+from ..models.work import Service, Order
+from ..serializers.work import ServiceSerializer, OrderSerializer
+from rest_framework import permissions
+from ..swagger_content import work
 
 
-@service.service
+@work.service
 class ServiceView(ModelViewSet):
     filterset_fields = ['service_type']
     queryset = Service.objects.all()
@@ -28,3 +21,21 @@ class ServiceView(ModelViewSet):
             permission_classes = [AllowAny]
 
         return [permission() for permission in permission_classes]
+
+
+@work.order
+class OrderView(ModelViewSet):
+    filterset_fields = ['service_type']
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_class = permissions.IsAuthenticatedOrReadOnly
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            permission_classes = [IsAuthenticated]
+        else:
+            # Просматривать заказы может и не авторизованный пользователь
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]
+
