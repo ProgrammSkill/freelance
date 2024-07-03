@@ -43,3 +43,8 @@ class Order(BaseService):
     class Meta:
         verbose_name = 'Заказы'
         verbose_name_plural = 'Заказы'
+
+
+class Tag(models.Model):
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True)

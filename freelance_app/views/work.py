@@ -1,8 +1,9 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import ModelViewSet
-from ..models.work import Service, Order
-from ..serializers.work import ServiceSerializer, OrderSerializer
-from rest_framework import permissions
+from ..models.work import Service, Order, Tag
+from ..serializers.work import ServiceSerializer, OrderSerializer, TagSerializer, TagListSerializer
+from rest_framework import permissions, generics, mixins, viewsets
 from ..swagger_content import work
 
 
@@ -39,3 +40,16 @@ class OrderView(ModelViewSet):
 
         return [permission() for permission in permission_classes]
 
+
+@extend_schema(tags=['Tags'])
+class TagView(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
+                                 viewsets.GenericViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_class = permissions.IsAuthenticatedOrReadOnly
+
+
+@extend_schema(tags=['Tags'])
+class TagListView(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagListSerializer

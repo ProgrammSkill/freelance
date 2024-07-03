@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from freelance_app.models.work import Service, Order
+from freelance_app.models.work import Service, Order, Tag
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -17,4 +17,18 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
+        fields = '__all__'
+
+class TagListSerializer(serializers.ModelSerializer):
+    service = ServiceSerializer()
+    order = OrderSerializer()
+
+    class Meta:
+        model = Tag
+        fields = '__all__'
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
         fields = '__all__'
