@@ -4,21 +4,20 @@ from rest_framework.generics import CreateAPIView, GenericAPIView, RetrieveUpdat
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.transaction import atomic
-from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
-from freelance import settings
 from freelance_app.common_utils.token import get_token
 from freelance_app.models.user import User, UserPvc
 from freelance_app.serializers.account import AccountCreateSerializer, AuthSerializer, \
-    ValidationPasswordAndPhoneSerializer, ChangePasswordSerializer, CheckEmailSerializer, UserAvatarsSerializer, \
-    AccountPatchSerializer, AccountDetailSerializer
+    ChangePasswordSerializer, CheckEmailSerializer, UserAvatarsSerializer, AccountPatchSerializer, \
+    AccountDetailSerializer
 from ..common_utils.serializers import TokenRefreshSerializer
 from ..swagger_content import account
 
 
 @account.auth
 class AuthView(CreateAPIView):
+    """ Авторизация """
     serializer_class = AuthSerializer
     authentication_classes = ()
     permission_classes = ()
@@ -26,6 +25,7 @@ class AuthView(CreateAPIView):
 
 @account.create
 class AccountCreateAPIView(CreateAPIView):
+    """ Регистрация пользователя """
     queryset = User.objects.all()
     serializer_class = AccountCreateSerializer
     authentication_classes = ()
@@ -49,17 +49,17 @@ class AccountCreateAPIView(CreateAPIView):
         }, status=status.HTTP_201_CREATED, headers=headers)
 
 
-@account.password_and_phone_validation
-class ValidationPasswordAndPhoneAPIView(CreateAPIView):
-    serializer_class = ValidationPasswordAndPhoneSerializer
-    authentication_classes = ()
-    permission_classes = ()
-
-    def post(self, request, **kwargs):
-        serializer = ValidationPasswordAndPhoneSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({'message': 'Валидация прошла успешно'})
+# @account.password_and_phone_validation
+# class ValidationPasswordAndPhoneAPIView(CreateAPIView):
+#     serializer_class = ValidationPasswordAndPhoneSerializer
+#     authentication_classes = ()
+#     permission_classes = ()
+#
+#     def post(self, request, **kwargs):
+#         serializer = ValidationPasswordAndPhoneSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response({'message': 'Валидация прошла успешно'})
 
 
 @account.refresh

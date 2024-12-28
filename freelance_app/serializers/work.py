@@ -19,6 +19,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = '__all__'
 
+
 class TagListSerializer(serializers.ModelSerializer):
     service = ServiceSerializer()
     order = OrderSerializer()
