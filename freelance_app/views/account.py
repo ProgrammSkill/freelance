@@ -48,20 +48,6 @@ class AccountCreateAPIView(CreateAPIView):
             'user': serializer.data
         }, status=status.HTTP_201_CREATED, headers=headers)
 
-
-# @account.password_and_phone_validation
-# class ValidationPasswordAndPhoneAPIView(CreateAPIView):
-#     serializer_class = ValidationPasswordAndPhoneSerializer
-#     authentication_classes = ()
-#     permission_classes = ()
-#
-#     def post(self, request, **kwargs):
-#         serializer = ValidationPasswordAndPhoneSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response({'message': 'Валидация прошла успешно'})
-
-
 @account.refresh
 class RefreshView(TokenRefreshView):
     serializer_class = TokenRefreshSerializer

@@ -138,52 +138,6 @@ class AccountCreateSerializer(serializers.ModelSerializer):
         return instance
 
 
-# class ValidationPasswordAndPhoneSerializer(serializers.Serializer):
-#     password = serializers.CharField(write_only=True, required=True)
-#     phone = serializers.CharField(required=False)
-#
-#     @staticmethod
-#     def validate_password(value):
-#         if not validate_password(value)[0] is True:
-#             raise CustomValidationError({'password': validate_password(value)[1]})
-#
-#         return value
-#
-#     @staticmethod
-#     def validate_phone(value):
-#         if User.objects.filter(phone=value).exists():
-#             raise CustomValidationError({'phone': 'Номер телефона занят другим пользователем'})
-#
-#         phone_pattern = re.compile(r'^\+?1?\d{9,15}$')
-#         if not phone_pattern.match(value):
-#             raise CustomValidationError({'phone': 'Введён некорректный номер телефона'})
-#
-#         return value
-#
-#     def create(self, validated_data):
-#         return {'message': 'Валидация прошла успешна'}
-
-
-class PasswordAndPhoneValidationCreateSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True)
-    phone = serializers.CharField(required=False)
-
-    class Meta:
-        model = User
-        fields = (
-            'email',
-            'username',
-            'password',
-            'verified_password',
-            'first_name',
-            'surname',
-            'patronymic',
-            'phone',
-            'pvc'
-        )
-        write_only_fields = ('password', 'verified_password', 'pvc')
-
-
 class AccountPatchSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField()
     patronymic = serializers.CharField(required=False)

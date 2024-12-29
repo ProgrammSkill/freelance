@@ -35,7 +35,7 @@ class OrderView(ModelViewSet):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             permission_classes = [IsAuthenticated]
         else:
-            # Просматривать заказы может и не авторизованный пользователь
+            #   Просматривать заказы может и не авторизованный пользователь
             permission_classes = [AllowAny]
 
         return [permission() for permission in permission_classes]

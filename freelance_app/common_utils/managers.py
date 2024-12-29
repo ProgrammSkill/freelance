@@ -5,7 +5,6 @@ from django.db.models.expressions import RawSQL
 from django.db.models.fields.related_descriptors import ForwardManyToOneDescriptor
 from django.db.models.manager import BaseManager
 
-
 def get_manager(*names):
     MANAGERS = {
         'filter_recursive': RecursionFindQuerySetMixin,
