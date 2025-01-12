@@ -2,7 +2,7 @@ from urllib.parse import urlencode
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from freelance_app.models.user import User
+from ..models import User
 
 
 class AuthViewTests(APITestCase):
