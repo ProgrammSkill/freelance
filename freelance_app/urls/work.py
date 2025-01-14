@@ -3,9 +3,9 @@ from rest_framework import routers
 from ..views.work import ServiceView, OrderView, TagListView, TagView
 
 router = routers.DefaultRouter()
-router.register('service', ServiceView, 'service'),
-router.register('order', OrderView, 'order'),
-router.register('tag', TagView, 'tag'),
+router.register('service', ServiceView, 'service')
+router.register('order', OrderView, 'order')
+router.register('tag', TagView, 'tag')
 
 urlpatterns = [
     path('', include(router.urls)),
