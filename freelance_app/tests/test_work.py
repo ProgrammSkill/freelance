@@ -64,6 +64,10 @@ class ServiceViewSetTestCase(TestCase):
     #     self.assertEqual(self.service.desk, 'Updated website development services')
     #     self.assertEqual(self.service.price, 1500)
 
+    """
+    Дописать тест
+    """
+
     def test_delete_service(self):
         response = self.client.delete(reverse('service-detail', args=[self.service.id]))
         self.assertEqual(response.status_code, 204)
