@@ -1,5 +1,5 @@
 """
-URL configuration for freelance project.
+URL configuration for core project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/freelance_app/', include('freelance_app.urls')),
+    path('api/', include('freelance_app.urls')),
     path("i18n/", include('django.conf.urls.i18n')),
 ]
 

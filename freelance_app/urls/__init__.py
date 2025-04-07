@@ -1,6 +1,6 @@
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView
-from freelance.settings import SPECTACULAR_ACCOUNT_SETTINGS, SPECTACULAR_WORK_SETTINGS
+from core.settings import SPECTACULAR_ACCOUNT_SETTINGS, SPECTACULAR_WORK_SETTINGS
 from freelance_app.swagger_content import SpectacularSwaggerView
 
 
